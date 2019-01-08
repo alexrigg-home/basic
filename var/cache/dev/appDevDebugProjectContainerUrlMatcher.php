@@ -122,6 +122,11 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
         }
         not_homepage:
 
+        // info
+        if ('/info' === $pathinfo) {
+            return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::infoAction',  '_route' => 'info',);
+        }
+
         if ('/' === $pathinfo && !$allow) {
             throw new Symfony\Component\Routing\Exception\NoConfigurationException();
         }
