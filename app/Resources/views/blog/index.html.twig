@@ -1,0 +1,21 @@
+{% extends 'baseblog.html.twig' %}
+{% block nav %}
+		{{ parent() }}
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">		
+	<p>Example page using simple bootstrap within a symfony framework. Here we're using a mixture of navigations and content. The page is responsive.
+	Progress: 
+	<div class="progress">
+	  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+	    <span class="sr-only">60% Complete</span>
+	  </div>
+	</div>
+	</p>
+	<button type="button" class="btn btn-primary">Choice A</button>
+	<button type="button" class="btn btn-success">Completed</button>
+	<button type="button" class="btn btn-danger">Warning</button>
+
+</div>	
+{% endblock %}

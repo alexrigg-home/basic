@@ -1,0 +1,11 @@
+/vendor/
+
+#symfony 3.4 cache etc
+/var/cache/*
+/var/logs/*
+var/sessions/*
+
+#bootstrap cache
+/var/boostrap.php.cache
+/composer.lock
+
