@@ -4,8 +4,10 @@
 {% endblock %}
 
 {% block body %}
+<div id="alert1" class="alert alert-success collapse" role="alert">Your completed something <button type="button" id="alert1close" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+<div id="alert2" class="alert alert-warning collapse" role="alert">You partially completed something <button type="button" id="alert2close" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 <div class="container-fluid">		
-	<p>Example page using simple bootstrap within a symfony framework. Here we're using a mixture of navigations and content. The page is responsive.
+	<p>Example page using simple bootstrap within a symfony framework. Here we're using a mixture of navigations and content. The page is responsive. Its basicly showing some fairly simple bootstrap fnuctionality with a little help from Jquery.
 	Progress: 
 	<div class="progress">
 	  <div  class="progress-bar checkprogress" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
@@ -146,25 +148,34 @@
 
 <script>
 $(document).ready(function() {
-	$(".progresscheck").change(function(){	
-	console.log('coucoucou');
+	$(".progresscheck").change(function(){		
 		var chkpercent = this.id.substring(6,7) * 20;				
-		console.log(chkpercent);
+		if ( chkpercent  == 40 ) $('#alert2').toggle();
+		if ( chkpercent  == 100 ) $('#alert1').toggle();
 		$('.checkprogress').each(function(){						
 			$(this).animate({
 			     width: chkpercent + '%',
 			     percent: 100
-
   			}, {
     			progress: function(a, p, n) {
       				$(this)
         				.css('width', (chkpercent * p + '%'))
         				.html(Math.round(chkpercent * p) + '%');
-
     			}
   			});
 		});
 	});
+
+	$("#alert1close").click(function(){
+		 console.log('hide the damn thing');
+		 $('#alert1').toggle();
+	});
+
+	$("#alert2close").click(function(){
+		 console.log('hide the damn thing');
+		 $('#alert2').toggle();
+	});
+
 });
 </script>
 

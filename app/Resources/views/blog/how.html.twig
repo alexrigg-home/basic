@@ -1,0 +1,104 @@
+{% extends 'baseblog.html.twig' %}
+{% block nav %}
+		{{ parent() }}
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+	<p>
+	Information:<br/>
+	This is built in Symfony 3.4.21<br/>
+	Using php 7.0.25	
+	</p>
+	<p>
+		Set up instructions:<br/>
+		So first we set up the server, you can skip whatever bits you dont need. This is stting up an apache2 server on ubuntu with dev self signed certificates so you can use https...<br/>
+		<ul>		
+		<li>sudo apt-get install openssh server</li>
+		<li>sudo apt-get ssh restart</li>
+
+		<li>sudo apt-get update</li>
+		<li>sudo apt-get install apache2</li>
+		<li>sudo a2enmod ssl</li>
+		<li>sudo a2enmod rewrite</li>
+
+		<li>sudo mkdir etc/apache2/ssl</li>
+		<li>sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt</li>
+		<li>nano /etc/apache2/sites-available mywebsite-ssl.conf </li>
+		</ul>
+		<p>		
+<textarea disabled rows="15" cols="90">
+<IfModule mod_ssl.c>
+	<VirtualHost *:443>
+		ServerName blog.rpt
+		ServerAlias www.blog.rpt
+		DocumentRoot "/var/www/blog/web"
+		ErrorLog ${APACHE_LOG_DIR}/blog.local-error.log
+		CustomLog ${APACHE_LOG_DIR}/blog.local-access.log combined
+		SSLEngine on
+		SSLCertificateFile /etc/apache2/ssl/apache-selfsigned.crt
+		SSLCertificateKeyFile /etc/apache2/ssl/apache-selfsigned.key
+		<Directory "/var/www/blog/web">
+		        #Options Indexes FollowSymLinks MultiViews
+		        AllowOverride All
+		        Require all granted
+		        #Order allow,deny
+		        #allow from all
+		        <IfModule mod_rewrite.c>
+		                Options -MultiViews
+		                RewriteEngine On
+		                RewriteCond %{REQUEST_FILENAME} !-f
+		                RewriteRule ^(.*)$ index.php [QSA,L]
+		        </IfModule>
+		</Directory>
+	</VirtualHost>
+</IfModule>
+</textarea>
+	</p>
+		<ul>
+		<li>sudo a2ensite mywebsite-ssl.conf</li>
+		<li>sudo apt-add-repository ppa:ondrej/php</li>
+		<li>sudo apt-get update</li>
+		<li>sudo apt-get install -y php7.0</li>
+		<li>sudo apt-get install -y php7.0-xml</li>
+		<li>curl -ksS https://getcomposer.org/instraller | php </li>
+		<li>sudo mv composer.phar /usr/local/bin/composer </li>
+		<li>sudo chmod +x /usr/local/bin/composer</li>		
+		</ul>
+	</p>
+	<p>
+		ok we now have all the bits we need before we start our symfony. Pays to be prepared!<br/>
+		<ul>
+			<li>cd /var/www/</li>
+			<li>symfony new blog 3.4</li>
+			<li>cd blog</li>
+			<li>composer install</li>
+			<li>HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`</li>
+			<li>sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var/cache var/logs var/sessions</li>
+			<li>sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var/cache var/logs var/sessions</li>
+		</ul>
+	</p>
+	<p>if the last two lines cause issues simply create the directories:  mkdir var/logs<br/> mkdir var/logs<br/> mkdir var/sessions<br/> and re run the lines </p>
+	<p>
+		<ul>
+			<li>php app/console cache:clear -e prod</li>
+			<li>ifconfig</li>
+		</ul>
+	</p>
+	<p>In the results for ifconfig will be a ip address. usualy something like 192.168.52.XXX
+		so </br>
+		...ens33     Link encap:Ethernet  HWaddr 00:0c:29:12:de:6d
+          inet addr:<b>192.168.52.131</b>  Bc.....
+      </br>
+      the last bit may vary but the 192.168 is standard.<br/> This is your ip for your vm box. and your development web site.<br/>
+		Now on your windows box (assuming your accessing a linux box on vm ware or similar for dev purposes) run notepad as administrator 
+		(left click choose as run as administrator) then navigate to  This PC > Lcoal Disk C: / Windows / System32 > drivers > etc <br/>
+		change the type of document from Text Documents to All Files<br/>
+		click on the file "hosts" and click open
+		add the ip
+		192.168.52.131 www.blog.rpt
+		on a new line and save it. <br/>
+		I tend to use rpt for development web sites because its readilly accepted by all browsers and very little used if at all currently.<br/>
+	</p>
+</div>
+{% endblock %}

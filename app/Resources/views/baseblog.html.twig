@@ -3,18 +3,18 @@
 {% block horiznav %}
 <ul class="nav nav-tabs justify-content-center">
   <li class="nav-item">
-    <a class="nav-link active" href="#">Home</a>
+    <a class="nav-link"  href="/" >Basic</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Blog</a>
+    <a class="nav-link {% if nav == 'info' %} active {% endif %}" href="/info">Example Bootstrap</a>
   </li>  
 </ul>
 {% endblock %}
 
 {% block sidenav %}
-<ul class="nav flex-column">
+<ul class="nav flex-column nav-pills">
   <li class="nav-item">
-    <a class="nav-link active" href="#"></a>
+    <a class="nav-link {% if nav == 'how' %} active {% endif %}" href="/how" >How can I build this</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="#">Link</a>

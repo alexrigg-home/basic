@@ -20,6 +20,18 @@ class DefaultController extends Controller
     }
 
 
+    /**
+     * @Route("/how", name="how")
+     */
+    public function howAction(Request $request)
+    {
+        // replace this example code with whatever you need
+        return $this->render('blog/how.html.twig', [
+            'nav' => 'how',
+        ]);
+    }
+
+
      /**
      * @Route("/info", name="info")
      */
@@ -27,7 +39,7 @@ class DefaultController extends Controller
     {
         // replace this example code with whatever you need
         return $this->render('blog/index.html.twig', [
-            'example' => 'example data passed from controller',
+            'nav' => 'info',
         ]);
     }
 }
