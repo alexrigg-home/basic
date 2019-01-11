@@ -1,32 +1,33 @@
 {% extends 'base.html.twig' %}
 
 {% block horiznav %}
-<ul class="nav nav-tabs justify-content-center">
+<ul class="nav nav-tabs justify-content-center"> 
   <li class="nav-item">
-    <a class="nav-link"  href="/" >Basic</a>
+    <a class="nav-link {% if nav == 'basic' %} active {% endif %}" href="/">Introduction</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link {% if nav == 'info' %} active {% endif %}" href="/info">Example Bootstrap</a>
-  </li>  
+    <a class="nav-link {% if nav == 'howsetup' %} active {% endif %}" href="/howsetup">How to set this up</a>
+  </li>    
 </ul>
 {% endblock %}
 
 {% block sidenav %}
 <ul class="nav flex-column nav-pills">
+{% if navcat == 'how' %}  
   <li class="nav-item">
-    <a class="nav-link {% if nav == 'how' %} active {% endif %}" href="/how" >How can I build this</a>
+    <a class="nav-link {% if nav == 'howsetup' %} active {% endif %}" href="/howsetup" >Server setup</a>
+  </li>  
+{% elseif navcat == 'blog' %}
+  <li class="nav-item">
+    <a class="nav-link {% if nav == 'info' %} active {% endif %}" href="/info">Example Bootstrap</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {% if nav == 'charts' %} active {% endif %}" href="/charts">HighCharts Examples</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="#">Link</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
-  </li>
-  <li class="nav-item">
-     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Dropdown
-    <span class="caret"></span>
-  </li>
+{% endif %}
 </ul>
 {% endblock %}
 

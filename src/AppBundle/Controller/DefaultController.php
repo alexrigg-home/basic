@@ -8,26 +8,56 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends Controller
 {
+    
+    // public function indexAction(Request $request)
+    // {
+    //     // replace this example code with whatever you need
+    //     return $this->render('default/index.html.twig', [
+    //         'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+    //     ]);
+    // }
+
     /**
-     * @Route("/", name="homepage")
+     * @Route("/", name="basic")
      */
     public function indexAction(Request $request)
     {
         // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+        $now = intval(date('Y'));
+        $start = 1999;
+        
+        return $this->render('blog/basic.html.twig', [
+            'nav' => 'basic',
+            'navcat' => 'blog',
+            'years' => ($now - $start),
         ]);
     }
 
 
     /**
-     * @Route("/how", name="how")
+     * @Route("/charts", name="charts")
      */
-    public function howAction(Request $request)
+    public function chartsAction(Request $request)
     {
         // replace this example code with whatever you need
-        return $this->render('blog/how.html.twig', [
-            'nav' => 'how',
+        $now = intval(date('Y'));
+        $start = 1999;
+        
+        return $this->render('blog/charts.html.twig', [
+            'nav' => 'charts',
+            'navcat' => 'blog',            
+        ]);
+    }
+
+    /**
+     * @Route("/howsetup", name="howsetup")
+     */
+    public function howsetupAction(Request $request)
+    {
+        // replace this example code with whatever you need
+        return $this->render('how/howsetup.html.twig', [
+            'nav' => 'howsetup',
+            'navcat' => 'how',
         ]);
     }
 
@@ -40,6 +70,7 @@ class DefaultController extends Controller
         // replace this example code with whatever you need
         return $this->render('blog/index.html.twig', [
             'nav' => 'info',
+            'navcat' => 'blog',
         ]);
     }
 }

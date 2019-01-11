@@ -12,7 +12,7 @@
 	</p>
 	<p>
 		Set up instructions:<br/>
-		So first we set up the server, you can skip whatever bits you dont need. This is stting up an apache2 server on ubuntu with dev self signed certificates so you can use https...<br/>
+		So first we set up the server, you can skip whatever bits you dont need. This is sitting up an apache2 server on ubuntu with dev self signed certificates so you can use https...<br/>
 		<ul>		
 		<li>sudo apt-get install openssh server</li>
 		<li>sudo apt-get ssh restart</li>
@@ -27,7 +27,7 @@
 		<li>nano /etc/apache2/sites-available mywebsite-ssl.conf </li>
 		</ul>
 		<p>		
-<textarea disabled rows="15" cols="90">
+<textarea disabled rows="15" class="md-textarea form-control">
 <IfModule mod_ssl.c>
 	<VirtualHost *:443>
 		ServerName blog.rpt
@@ -78,7 +78,7 @@
 			<li>sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var/cache var/logs var/sessions</li>
 		</ul>
 	</p>
-	<p>if the last two lines cause issues simply create the directories:  mkdir var/logs<br/> mkdir var/logs<br/> mkdir var/sessions<br/> and re run the lines </p>
+	<p>if the last two lines cause issues simply create the directories:  mkdir var/logs<br/> mkdir var/logs<br/> mkdir var/sessions<br/> and re run the lines last 3 lines again</p>
 	<p>
 		<ul>
 			<li>php app/console cache:clear -e prod</li>
@@ -91,14 +91,21 @@
           inet addr:<b>192.168.52.131</b>  Bc.....
       </br>
       the last bit may vary but the 192.168 is standard.<br/> This is your ip for your vm box. and your development web site.<br/>
+  </p>
+  <p>
 		Now on your windows box (assuming your accessing a linux box on vm ware or similar for dev purposes) run notepad as administrator 
-		(left click choose as run as administrator) then navigate to  This PC > Lcoal Disk C: / Windows / System32 > drivers > etc <br/>
+		(left click choose as run as administrator) then navigate to <br/> This PC > Local Disk C: / Windows / System32 > drivers > etc <br/>
 		change the type of document from Text Documents to All Files<br/>
 		click on the file "hosts" and click open
 		add the ip
 		192.168.52.131 www.blog.rpt
 		on a new line and save it. <br/>
 		I tend to use rpt for development web sites because its readilly accepted by all browsers and very little used if at all currently.<br/>
+		<ul>
+			<li>sudo service apache2 reload</li>
+			<li> browse to https://www.blog.rpt </li>
+		</ul>
+		and you should see a symfony screen..
 	</p>
 </div>
 {% endblock %}
