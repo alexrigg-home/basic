@@ -40,12 +40,31 @@ class DefaultController extends Controller
     public function chartsAction(Request $request)
     {
         // replace this example code with whatever you need
-        $now = intval(date('Y'));
-        $start = 1999;
         
+        //example data
+        $categories = Array('London', 'New York', 'Paris', 'Berlin', 'Moscow');    
+        $series[] = Array(
+            'name' => 2015,
+            'data' => json_encode(array(43934, 24916, 11744, null, 12908))
+        );
+        $series[] = Array(
+            'name' => 2016,
+            'data' =>  json_encode(Array(52503, 24064, 17722, null, 5948))
+        );
+        $series[] = Array(
+            'name' => 2017,
+            'data' => json_encode(Array(57177, 29742, 16005, 7988, 8105))
+        );
+        $series[] = Array(
+            'name' => 2018,
+            'data' => json_encode(Array(69658, 29851, 19771, 12169, 11248))
+        );
+
         return $this->render('blog/charts.html.twig', [
             'nav' => 'charts',
-            'navcat' => 'blog',            
+            'navcat' => 'blog',
+            'cat' => json_encode($categories),
+            'series' => $series            
         ]);
     }
 
@@ -70,6 +89,18 @@ class DefaultController extends Controller
         // replace this example code with whatever you need
         return $this->render('blog/index.html.twig', [
             'nav' => 'info',
+            'navcat' => 'blog',
+        ]);
+    }
+
+    /**
+     * @Route("/about", name="about")
+    */
+    public function aboutAction(Request $request)
+    {
+        // replace this example code with whatever you need
+        return $this->render('blog/aboutme.html.twig', [
+            'nav' => 'about',
             'navcat' => 'blog',
         ]);
     }

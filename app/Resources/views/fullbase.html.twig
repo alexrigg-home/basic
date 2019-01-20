@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}{% endblock %}</title>
+        {% block stylesheets %}
+        <link rel="stylesheet" href="/css/bootstrap.min.css" ></script>
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
+      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="#">Sign out</a>
+        </li>
+      </ul>
+    </nav>
+
+
+
+
+    <div id="layout" class="content pure-g">
+        <div id="nav" class="pure-u">
+            <a href="#" class="nav-menu-button">Menu</a>
+            <div class="nav-inner">
+                <div class="pure-menu">
+                    {% block nav %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+        <div id="main" class="pure-u-1" >
+            {% block body %}
+            {% endblock %}
+        </div>
+    </div>
+    {% block javascripts %}
+        <script src="/js/bootstrap.min.js" ></script>
+    {% endblock %}  
+    </body>
+</html>
