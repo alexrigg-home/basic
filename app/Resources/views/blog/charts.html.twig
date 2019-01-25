@@ -9,8 +9,9 @@
 {% endblock %}
 
 {% block body %}
-<div class="container-fluid">  
-     {% for data in series %}
+<div class="container-fluid"> 
+    {{ barcat|raw }} 
+     {% for data in lineseries %}
        {% for key, datapart in data %}
             {{ key }} {{ datapart|raw  }}
        {% endfor %}   
@@ -61,23 +62,16 @@
         }
     },
 
-    series: [    
-    {
-        name: 'London',
-        data: [43934, 52503, 57177, 69658]
-    }, {
-        name: 'New York',
-        data: [24916, 24064, 29742, 29851]
-    }, {
-        name: 'Paris',
-        data: [11744, 17722, 16005, 19771]
-    }, {
-        name: 'Berlin',
-        data: [null, null, 7988, 12169]
-    }, {
-        name: 'Moscow',
-        data: [12908, 5948, 8105, 11248]
-    }],
+    series: [        
+{% for data in lineseries %}
+{
+{% for key, datapart in data %}
+    {% if key == 'name' %} name: 'Year {{ datapart|raw }}', {% endif %}                 
+    {% if key == 'data' %} data: {{ datapart|raw }} {% endif %}                 
+{% endfor %}   
+},
+{% endfor %}
+],
 
 
     responsive: {
@@ -111,7 +105,7 @@ Highcharts.chart('chart2', {
         text: 'subtitle'
     },
     xAxis: {        
-        categories: {{ cat|raw }},
+        categories: {{ barcat|raw }},
         title: {
             text: null
         }
@@ -150,19 +144,16 @@ Highcharts.chart('chart2', {
     credits: {
         enabled: false
     },
-    series: [{
-        name: 'Year 2015',
-        data: [43934, 24916, 11744, null, 12908]
-    }, {
-        name: 'Year 2016',
-        data: [52503, 24064, 17722, null, 5948]
-    }, {
-        name: 'Year 2017',
-        data: [57177, 29742, 16005, 7988, 8105]
-    }, {
-        name: 'Year 2018',
-        data: [69658, 29851, 19771, 12169, 11248]
-    }]
+    series: [
+{% for data in barseries %}
+{
+{% for key, datapart in data %}
+    {% if key == 'name' %} name: 'Year {{ datapart|raw }}', {% endif %}                 
+    {% if key == 'data' %} data: {{ datapart|raw }} {% endif %}                 
+{% endfor %}   
+},
+{% endfor %}
+]
 });
  </script>
     <script type="text/javascript">
@@ -179,7 +170,7 @@ Highcharts.chart('chart3', {
         text: 'Example pie Chart'
     },
     tooltip: {
-        pointFormat: 'subtitle example'
+        pointFormat: '<b>{point.percentage:.2f}%</b>'
     },
     plotOptions: {
         pie: {
@@ -192,26 +183,18 @@ Highcharts.chart('chart3', {
         }
     },
     series: [{
-        name: 'Brands',
+        name: 'Cities',
         colorByPoint: true,
-        data: [{
-            name: 'London',
-            y: 61.41,
-            sliced: true,
-            selected: true
-        }, {
-            name: 'New York',
-            y: 11.84
-        }, {
-            name: 'Paris',
-             y: 10.85
-        }, {
-            name: 'Berlin',
-            y: 4.67
-        }, {
-            name: 'Moscow',
-            y: 4.18
-        }]         
+        data: [
+{% for data in pieseries %}
+{
+{% for key, datapart in data %}
+    {% if key == 'name' %} name: '{{ datapart|raw }}', {% endif %}                 
+    {% if key == 'data' %} y: {{ datapart|raw }} {% endif %}                 
+{% endfor %}   
+},
+{% endfor %}
+        ]         
     }]
 });
         </script>

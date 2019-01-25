@@ -45,26 +45,112 @@ class DefaultController extends Controller
         $categories = Array('London', 'New York', 'Paris', 'Berlin', 'Moscow');    
         $series[] = Array(
             'name' => 2015,
-            'data' => json_encode(array(43934, 24916, 11744, null, 12908))
+            'data' => array(43934, 24916, 11744, 0, 12908)
         );
         $series[] = Array(
             'name' => 2016,
-            'data' =>  json_encode(Array(52503, 24064, 17722, null, 5948))
+            'data' => Array(52503, 24064, 17722, 0, 5948)
         );
         $series[] = Array(
             'name' => 2017,
-            'data' => json_encode(Array(57177, 29742, 16005, 7988, 8105))
+            'data' => Array(57177, 29742, 16005, 7988, 8105)
         );
         $series[] = Array(
             'name' => 2018,
-            'data' => json_encode(Array(69658, 29851, 19771, 12169, 11248))
+            'data' => Array(69658, 29851, 19771, 12169, 11248)
         );
+        // manipulations should be done outside the view - and in a helper or something...
+
+        //linegraph
+        $lineseries = array();       
+        foreach($series as $serieskey => $data)        
+        {                        
+            foreach($data as $key=>$dataseries)
+            {               
+                foreach($categories as $catkey => $cat)
+                {
+                    if ( !array_key_exists($catkey,$lineseries) ) $lineseries[$catkey] = array();
+                    if ( !array_key_exists('name',$lineseries[$catkey]) ) $lineseries[$catkey]['name'] = $cat;
+                    if ( !array_key_exists('data',$lineseries[$catkey])) $lineseries[$catkey]['data'] = array();                    
+                    
+                    if ( $key == 'data' )
+                    {                                                                            
+                        $lineseries[$catkey]['data'][$serieskey]=intval($dataseries[$catkey]);
+                    }
+                }                        
+            }
+        }
+       
+
+        //line graph       
+        $lineOutput = array();
+        foreach($lineseries as $data)
+        {
+            $linedata = array();
+            foreach($data as $key=>$dataseries)   
+            if ( $key == 'name' ) 
+            {
+                $linedata['name'] =$dataseries;
+            } else {
+                $linedata['data'] =json_encode($dataseries);
+            }
+            $lineOutput[] = $linedata;
+        }
+       
+
+        //pie chart
+        $pieOutput = array();
+        $total = 0;
+        foreach($lineseries as $data)
+        {
+            $piedata = array();
+            foreach($data as $key=>$dataseries)   
+            if ( $key == 'name' ) 
+            {
+                $piedata['name'] =$dataseries;
+            } else {
+                $piedata['data'] =0;
+                foreach ($dataseries as $datavalue)
+                {
+                    $piedata['data']+= $datavalue;
+                }
+                $total+= $piedata['data'];
+            }            
+            $pieOutput[] = $piedata;
+        }
+        // no division by 0
+        if ( $total > 0 )
+        {
+            foreach($pieOutput as $pieKey => $piepiece)
+            {             
+                $pieOutput[$pieKey]['data'] = ($pieOutput[$pieKey]['data'] / $total) * 100;
+            }
+        }
+       
+
+        //bargraph
+        $barcat = json_encode($categories);
+        $barOutput = array();
+        foreach($series as $data)
+        {
+            $bardata = array();
+            foreach($data as $key=>$dataseries)   
+            if ( $key == 'name' ) 
+            {
+                $bardata['name'] =$dataseries;
+            } else {
+                $bardata['data'] =json_encode($dataseries);
+            }
+            $barOutput[] = $bardata;
+        }
 
         return $this->render('blog/charts.html.twig', [
             'nav' => 'charts',
             'navcat' => 'blog',
-            'cat' => json_encode($categories),
-            'series' => $series            
+            'pieseries' => $pieOutput,
+            'lineseries'=>$lineOutput,
+            'barcat' => $barcat,
+            'barseries' => $barOutput            
         ]);
     }
 
