@@ -35,6 +35,21 @@ class DefaultController extends Controller
 
 
     /**
+     * @Route("/worldnews", name="worldnews")
+    */
+    public function worldnewsAction(Request $request)
+    {
+        // replace this example code with whatever you need
+       $seismic=simplexml_load_file('http://www.bgs.ac.uk/feeds/WorldSeismology.xml');          
+
+       return $this->render('blog/worldnews.html.twig', [
+            'nav' => 'worldnews',
+            'navcat' => 'blog',
+            'seismic' => $seismic
+        ]);
+    }
+
+    /**
      * @Route("/charts", name="charts")
      */
     public function chartsAction(Request $request)
@@ -162,6 +177,18 @@ class DefaultController extends Controller
         // replace this example code with whatever you need
         return $this->render('how/howsetup.html.twig', [
             'nav' => 'howsetup',
+            'navcat' => 'how',
+        ]);
+    }
+
+     /**
+     * @Route("/howgraphs", name="howgraphs")
+     */
+    public function howgraphsAction(Request $request)
+    {
+        // replace this example code with whatever you need
+        return $this->render('how/howgraphs.html.twig', [
+            'nav' => 'howgraphs',
             'navcat' => 'how',
         ]);
     }
