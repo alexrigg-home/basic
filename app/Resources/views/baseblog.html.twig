@@ -3,11 +3,11 @@
 {% block horiznav %}
 <ul class="nav nav-tabs justify-content-center"> 
   <li class="nav-item">
-    <a class="nav-link {% if nav == 'basic' %} active {% endif %}" href="/">Introduction</a>
+    <a class="nav-link {% if navcat == 'blog' %} active {% endif %}" href="/">Introduction</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link {% if nav == 'howsetup' %} active {% endif %}" href="/howsetup">How to set this up</a>
-  </li>    
+    <a class="nav-link {% if navcat == 'how' %} active {% endif %}" href="/howsetup">How to set this up</a>
+  </li>  
 </ul>
 {% endblock %}
 
@@ -16,6 +16,9 @@
 {% if navcat == 'how' %}  
   <li class="nav-item">
     <a class="nav-link {% if nav == 'howsetup' %} active {% endif %}" href="/howsetup" >Server setup</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link {% if nav == 'howgraphs' %} active {% endif %}" href="/howgraphs" >Graphs setup</a>
   </li>  
 {% elseif navcat == 'blog' %}
   <li class="nav-item">
@@ -28,8 +31,9 @@
     <a class="nav-link {% if nav == 'about' %} active {% endif %}" href="/about">About Me</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
+    <a class="nav-link {% if nav == 'worldnews' %} active {% endif %}" href="/worldnews">World News</a>
   </li>
+  
 {% endif %}
 </ul>
 {% endblock %}
