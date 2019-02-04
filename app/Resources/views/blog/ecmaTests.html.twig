@@ -1,0 +1,62 @@
+{% extends 'baseblog.html.twig' %}
+
+ {% block javascripts %}
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.29/browser.js"></script>
+ {% endblock %}
+
+{% block nav %}
+		{{ parent() }}
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+	<p>look in the console! - this is a page showing allbeit in teh console of the browser, ECMA 6 functionality used in javascript.</p>
+	<script type="text/babel">
+		console.log('set examples');
+		var books = new Set();
+		books.add('Pride and Prejudice');
+		books.add('War and Peace')
+			 .add('Oliver Twist');
+		books.delete('Oliver Twist');
+		console.log('number of books:', books.size);
+		console.log('has War and Peace?', books.has('War and Peace'));
+		console.log('has Oliver Twist?', books.has('Oliver Twist'));
+		console.log('has War and Peace?', books.has('War and Peace'));
+		console.log(`do it a different way has oliver ?:  ${books.has('Oliver Twist')}`);		
+		console.log(`the books left are in an object ${books}`);
+		console.log('books left are :' ,books);
+		
+		console.log('map examples');
+		var course = new Map();
+		course.set('housekeeping', {description: 'washing and so on'});
+		course.set('visiting parents', {description: 'learning to keep sane'});
+
+		console.log(`this is a map with ${course.size} items in it`);
+		console.log('this wont work ',course.housekeeping);
+		console.log('this will work',course.get('housekeeping'));
+		console.log('you can for loop through a map');		
+		course.forEach(function( item) {
+			console.log(item.description);
+		});
+
+		console.log('or you can use entries with a next');
+		var allcourses = course.entries();
+		console.log(allcourses.next().value);
+
+		console.log('loop through for..of entries');
+		for (const entry of course.entries()) {
+		  console.log(`key for this is :  ${entry[0]} and the description is : ${entry[1].description}`);
+		}
+
+		var test = {
+			testing(counter) {
+				console.log('testing '.repeat(counter));
+			}
+		}
+
+		test.testing(2);
+
+	</script>
+	<div id="books"></div>
+</div>
+{% endblock %}

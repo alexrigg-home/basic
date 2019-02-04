@@ -193,4 +193,16 @@ class DefaultController extends Controller
             'navcat' => 'blog',
         ]);
     }
+
+    /**
+     * @Route("/ecmaTests", name="ecmaTests")
+    */
+    public function ecmaTestsAction(Request $request)
+    {
+        // replace this example code with whatever you need
+        return $this->render('blog/ecmaTests.html.twig', [
+            'nav' => 'ecmaTests',
+            'navcat' => 'blog',
+        ]);
+    }
 }
