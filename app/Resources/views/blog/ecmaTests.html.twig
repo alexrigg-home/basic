@@ -2,6 +2,7 @@
 
  {% block javascripts %}
  	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.29/browser.js"></script>
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.29/browser-polyfill.js"></script>
  {% endblock %}
 
 {% block nav %}
@@ -10,7 +11,10 @@
 
 {% block body %}
 <div class="container-fluid">
-	<p>look in the console! - this is a page showing allbeit in teh console of the browser, ECMA 6 functionality used in javascript.</p>
+	<p>look in the console! - this is a page showing allbeit in teh console of the browser, ECMA 6 functionality used in javascript.
+		<br/>noted source maps dont work in firefox....<br/>
+
+	</p>
 	<script type="text/babel">
 		console.log('set examples');
 		var books = new Set();
@@ -48,6 +52,7 @@
 		  console.log(`key for this is :  ${entry[0]} and the description is : ${entry[1].description}`);
 		}
 
+		//objetc with functions
 		var test = {
 			testing(counter) {
 				console.log('testing '.repeat(counter));
@@ -55,6 +60,81 @@
 		}
 
 		test.testing(2);
+		//objects
+		var test = {
+			type: 'thorough',
+			description: 'agile based stud',
+			documented: true,
+			version: 1
+		};
+
+		function testDetail({type, version })
+		{
+			return `test details: ${type} current version: ${version}`;
+		}
+
+		console.log(testDetail(test));
+
+
+		//using generators and yeild
+		function* testserial()
+		{
+			var results = ["basic","normal","advanced" ];
+			yield results[0];
+			yield results[1];
+			yield results[2];			
+		}
+
+
+		var action = testserial();
+		var result = action.next();
+		console.log('so we loop through calling the test as we go...');
+		while ( result.done == false )
+		{
+			console.log(result.value);
+			result = action.next();
+		}
+		
+		const id = Symbol();
+		const info = {
+			title:'My book',
+			topic:'fantasy dungeons',
+			id:'778A'
+		};
+
+		info[id] = 74747; //this is now a symbol not a param of the Info
+		console.log(info);
+
+
+
+		//promises promises
+		const  throttle = seconds => {
+			return new Promise(( resolve, reject ) => {
+					if ( typeof seconds !== 'number') 
+					{
+						reject(new Error('seconds must be a number'));
+					}
+					setTimeout(
+						() => resolve(`${seconds} throttling has occurred`),
+						seconds*1000
+					);
+				});
+			};
+
+		// then then then.. 
+		console.log('pre throttle');
+		throttle(1).then(msg => console.log(msg));
+		throttle(3).then(msg => `${msg} !`).then(msg => console.log(msg)); 
+
+
+		//wont work due to https rules
+		// const getSpacePeeps = () => 
+		// 		fetch('https://api.open-notify.org/astros.json')
+		// 		.then(res => res.json());
+
+
+		// getSpacePeeps()
+		// 	.then(console.log);
 
 	</script>
 	<div id="books"></div>
