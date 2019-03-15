@@ -7,6 +7,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use AppBundle\Utils\ChartDataTransformer;
 
+use AppBundle\Entity\Blog;
+use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\EntityManagerInterface;
+
 class DefaultController extends Controller
 {
     
@@ -197,6 +201,19 @@ class DefaultController extends Controller
     }
 
 
+    /**
+     * @Route("/howdbsetup", name="howdbsetup")
+     */
+    public function howdbsetupsetupAction(Request $request)
+    {
+        // replace this example code with whatever you need
+        return $this->render('how/howdb.html.twig', [
+            'nav' => 'howdbsetup',
+            'navcat' => 'how',
+        ]);
+    }
+
+
      /**
      * @Route("/info", name="info")
      */
@@ -214,10 +231,22 @@ class DefaultController extends Controller
     */
     public function aboutAction(Request $request)
     {
+        $name  = 'about';
+        $about = $this->getDoctrine()
+                ->getRepository(Blog::class)
+                ->findOneByName($name);
+
+            if (!$about) {
+                throw $this->createNotFoundException(
+                    'No blog found for name '.$name
+                );
+            }
+
         // replace this example code with whatever you need
         return $this->render('blog/aboutme.html.twig', [
             'nav' => 'about',
             'navcat' => 'blog',
+            'data' => $about->getDescription(),
         ]);
     }
 
