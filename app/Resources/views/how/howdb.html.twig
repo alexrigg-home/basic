@@ -1,0 +1,67 @@
+{% extends 'baseblog.html.twig' %}
+{% block nav %}
+		{{ parent() }}
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+	<p>
+		So a system without using a database is rare and I'd suggest if you are thinking of you are thinking of using symfony for a flat website, you rethink.<br/>
+		<br/>
+		install mysql <br/>
+		sudo apt-get install mysql-server<br/>
+		sudo apt-get install php libapache2-mod-php php-mcrypt php-mysql<br/>
+		<br/>
+		sudo service apache2 restart<br/>
+		<br/>
+		MYSQL -u root -p <br/>
+		and you chould be in mysql<br/>
+		quit<br/>
+		<br/>
+		I'd suggest installing workbench for dev - <a href="https://dev.mysql.com/downloads/workbench/">https://dev.mysql.com/downloads/workbench/</a><br/>
+		<br/>
+		Once installed set up a new connection<br/>
+		Go to your VMware server and into the command line type:<br/>
+		ifconfig<br/>
+		look for 192.168.XX.XXX<br/>
+		and copy that into Hostname.<br/>
+		enter the user and password<br/>
+		In workbench create a schema (left click on the schemas section). ok your done in workbench<br/>
+		<br/>
+		Now the next bit is for using Doctrine: <br/>
+		best practice is you store config information in the envars of apache. Not in the code.<br/>
+		sudo nano /etc/apache2/envars
+		<br/>
+		export BASIC_DB_USER=myUsername<br/>
+		export BASIC_DB_PASSWORD=myMySqlPassword<br/>
+		export BASIC_DB_PORT=3306<br/>
+		export BASIC_DB_NAME=mySchemaName<br/>
+		<br/>
+		This enables use of the data inside the symfony project.<br/>
+		But this wont help us run commands for doctrine on the command line so we need to add the same things for php cli to pick up.<br/>
+		sudo nano /etc/environment
+		<br/>
+		export BASIC_DB_USER=myUsername<br/>
+		export BASIC_DB_PASSWORD=myMySqlPassword<br/>
+		export BASIC_DB_PORT=3306<br/>
+		export BASIC_DB_NAME=mySchemaName<br/>
+		<br/>
+
+		Now you can run commands in doctrine to built entities and SQL tables.<br/>
+		So for example already set up on this example (from github) :<br/>
+		go to command line and type:</br>
+		php bin/console doctrine:schema:validate<br/>
+		- here you should get feed back on wether doctrine can see the database based on your parameter.php sttings.<br/>
+		- for trouble shooting try dump($container->getParameter('database_port'));  or un hashing the code in parameters.php.<br/>
+		<br/>
+		php bin/console doctrine:generate:entity<br/>
+		and follow the instructions<br/>
+		then try<br/>
+		php bin/console doctrine:schema:update<br/>
+
+		great huh. the database is upadated with the entitiy you just created!<br/>
+
+
+	</p>
+</div>
+{% endblock %}
