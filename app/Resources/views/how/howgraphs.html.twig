@@ -1,0 +1,15 @@
+{% extends 'baseblog.html.twig' %}
+{% block nav %}
+		{{ parent() }}
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+	<p>The graphs displayed here are Highcharts which I've found are well documented, well used (by microsoft, facebook, mastercard to name a few) and work well with bootstrap (full responsive). Also fairly importantly the graphs have a wide range and can be tweaked to do exactly what you want. <br/>More examples can be shown on their site at <a href="https://www.highcharts.com/demo">High charts demos</a> or ( https://www.highcharts.com/demo ) </p>
+	<p>All you need to add to your environment is the link to your downloaded highcharts js file. Usually highcharts/code/highcharts.js.. depending on where you put it.<br/>
+	bare in mind that though for personal ie non commercial use highcharts is free, there is a licencing cost to use it. <a href="https://www.highcharts.com/blog/products/highcharts/">more info here</a><br/>
+	If you were using say REACT you might decide to use <a href="http://recharts.org/en-US/">ReCharts</a> however so far I've found highcharts to an a more extensive library of charts and if you go to the site you may notice the lack of responsiveness.<br/> but again its down to what you need and whats the best fit for the product.
+	</p>
+
+</div>
+{% endblock %}
