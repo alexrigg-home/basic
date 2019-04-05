@@ -16,6 +16,7 @@
 !var/logs/.gitkeep
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
+!.htaccess
 
 # Managed by Composer
 /app/bootstrap.php.cache
