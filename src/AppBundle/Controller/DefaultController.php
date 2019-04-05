@@ -35,6 +35,7 @@ class DefaultController extends Controller
             'nav' => 'basic',
             'navcat' => 'blog',
             'years' => ($now - $start),
+            'bottom' => getenv('BOTTOM_NAME_IS'),
         ]);
     }
 
