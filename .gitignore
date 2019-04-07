@@ -9,6 +9,7 @@
 /var/cache/*
 /var/logs/*
 /var/sessions/*
+.htaccess
 !/var/cache
 !/var/logs
 !/var/sessions
@@ -16,7 +17,7 @@
 !var/logs/.gitkeep
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
-!.htaccess
+
 
 # Managed by Composer
 /app/bootstrap.php.cache

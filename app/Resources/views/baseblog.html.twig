@@ -13,6 +13,13 @@
 
 {% block sidenav %}
 <ul class="nav flex-column nav-pills">
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+  <li class="nav-item"><p class="nav-link">Logged in as Admin</p></li>
+{% elseif is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+  <li class="nav-item"><p class="nav-link">Logged in as User</p></li>
+{% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+  <li class="nav-item"><p class="nav-link">Not Logged in</p></li>
+{% endif %}
 {% if navcat == 'how' %}  
   <li class="nav-item">
     <a class="nav-link {% if nav == 'howsetup' %} active {% endif %}" href="/howsetup" >Server setup</a>
@@ -36,7 +43,11 @@
   <li class="nav-item">
     <a class="nav-link {% if nav == 'worldnews' %} active {% endif %}" href="/worldnews">World News</a>
   </li>
-  
+{% endif %}
+{% if is_granted('ROLE_ADMIN') %}
+  <li class="nav-item">
+    <a class="nav-link {% if nav == 'hello' %} active {% endif %}" href="/hello">Private</a>
+  </li>
 {% endif %}
 </ul>
 {% endblock %}

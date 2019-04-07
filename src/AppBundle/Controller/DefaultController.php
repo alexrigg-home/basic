@@ -11,9 +11,24 @@ use AppBundle\Entity\Blog;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
+
 class DefaultController extends Controller
 {
     
+    
+
+
+    /**
+     * @Route("/admin")
+     */
+    public function adminAction()
+    {
+        return new Response('<html><body>Admin page!</body></html>');
+    }
+
+
     // public function indexAction(Request $request)
     // {
     //     // replace this example code with whatever you need
@@ -262,4 +277,21 @@ class DefaultController extends Controller
             'navcat' => 'blog',
         ]);
     }
+
+    
+    // using security requires the include
+    /**
+     * @Route("/hello", name="hello")
+     * @Security("has_role('ROLE_ADMIN')")
+    */
+    public function helloAction(Request $request)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        // replace this example code with whatever you need
+        return $this->render('secure/hello.html.twig', [
+            'nav' => 'hello',
+            'navcat' => 'secure',
+        ]);
+    }
+
 }
